@@ -137,7 +137,14 @@ function SetDefaultSettingView() {
 		DisplayProjectDataList(sortProjectId);
 
 	// ［プロジェクト情報一覧］画面への切り替え
+
+/* <<<<< OLD： 引数を用いて関数を共通化
 		ChangeSelectView();
+========== */
+		SwitchViewMode('select');
+// >>>>> NEW： ここまで
+
+
 	}
 
 // エラーの表示
@@ -572,7 +579,13 @@ function ClickEditProjectDataButton() {
 		}
 
 	// ［プロジェクト情報編集］画面への切り替え
+
+/* <<<<< OLD： 引数を用いて関数を共通化
 		ChangeEditView();
+========== */
+		SwitchViewMode('edit')
+// >>>>> NEW： ここまで
+
 	}
 
 // エラーの表示
