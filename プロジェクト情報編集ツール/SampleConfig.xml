@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <SampleConfig>
+
+	<!-- Web APIを実行するWebサーバのマシン名 -->
 	<ServerName></ServerName>
+
+	<!-- Web APIを実行するWebサイトのアプリケーション名 -->
 	<TTFXWebServer></TTFXWebServer>
+
 </SampleConfig>
