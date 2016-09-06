@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<title>プロジェクト情報編集ツール</title>
+	
+	<script type="text/javascript" src="EditProjectData.js"></script>
+	<script type="text/javascript" src="Control.js"></script>
+	
+	<style type="text/css">
+	<!--
+		td { white-space: nowrap; }
+		td.SN { font-size:13px; }
+	-->
+	</style>
+</head>
+
+<body topmargin="0" leftmargin="0" rightmargin="0" onLoad="SetDefaultSettingView()">
+<!-- ヘッダー -->
+	<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr bgcolor="#696969" height="60">
+			<td rowspan="2" width="20"></td>
+			<td rowspan="2" valign="middle" width="38%">
+				<img src="./image/logo_mono39.png">
+			</td>
+			<td colspan="2" align="left" valign="bottom">
+				<font size="6" color="#ffffff"><b><em>プロジェクト情報編集ツール</em></b></font>
+			</td>
+		</tr>
+		<tr bgcolor="#696969">
+			<td rowspan="2" align="right" valign="bottom">
+				<font size="1" color="#ffffff">Copyright(C) DENSO CREATE INC. All rights reserved.</font>
+			</td>
+		</tr>
+	</table>
+	</div>
+	<br>
+
+<!-- プロジェクト情報一覧画面 -->
+	<span id="selectView" style="display: none;">
+	<table border="0" cellpadding="3" cellspacing="0" align="center">
+		<caption><B>■　プロジェクト情報一覧　■</B></caption>
+		<tr>
+			<td>
+				<table id="projectListTable" border="1" cellpadding="3" cellspacing="0" align="center" borderColor="#696969" bgcolor="#696969" width="776">
+					<thead align="center" bgcolor="#C0C0C0">
+						<tr>
+							<td width="30"><font size="2">選択</font></td>
+							<td width="130"><font size="2">プロジェクトコード</font></td>
+							<td width="150"><font size="2">プロジェクト名</font></td>
+							<td width="100"><font size="2">マネージャ名</font></td>
+							<td width="100"><font size="2">組織名</font></td>
+							<td width="70"><font size="2">開始日</font></td>
+							<td width="70"><font size="2">終了日</font></td>
+							<td width="60"><font size="2">ステータス</font></td>
+						</tr>
+					</thead>
+					<tbody bgcolor="#ffffff">
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<input type="button" value="　　プロジェクト情報の編集　　" onclick="ClickEditProjectDataButton()"/>
+			</td>
+		</tr>
+	</table>
+	</span>
+	
+<!--プロジェクト情報編集画面 -->
+	<span id="editView" style="display: none;">
+	<input type="hidden" id="projectId" value=""/>
+	<table border="0" cellpadding="3" cellspacing="0" align="center">
+		<caption><B>■　プロジェクト情報編集　■</B></caption>
+		<tr>
+			<td>
+				<table border="0" cellpadding="3" cellspacing="0" align="center">
+					<tr>
+						<td align="right">プロジェクトコード</td>
+						<td>：</td>
+						<td><input type="text" id="projectCode" value="" maxlength="128" style="width:250px"/></td>
+					</tr>
+					<tr>
+						<td align="right">プロジェクト名</td>
+						<td>：</td>
+						<td><input type="text" id="projectName" value="" maxlength="128" style="width:250px"/></td>
+					</tr>
+					<tr>
+						<td align="right">マネージャ名</td>
+						<td>：</td>
+						<td>
+							<select name="selectManager">
+								<option value="">ManagerName</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">組織</td>
+						<td>：</td>
+						<td class="SN" id="sectionName">SectionName</td>
+					</tr>
+					<tr>
+						<td align="right">開始日</td>
+						<td>：</td>
+						<td>
+							<select name="selectStartYear" onchange="ChangeStartYear()">
+								<option value="">0000</option>
+							</select>
+							年
+							<select name="selectStartMonth" onchange="ChangeStartMonth()">
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+							月
+							<select name="selectStartDay">
+								<option value="">00</option>
+							</select>
+							日
+						</td>
+					</tr>
+					<tr>
+						<td align="right">終了日</td>
+						<td>：</td>
+						<td>
+							<select name="selectFinishYear" onchange="ChangeFinishYear()">
+								<option value="">0000</option>
+							</select>
+							年
+							<select name="selectFinishMonth" onchange="ChangeFinishMonth()">
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+							月
+							<select name="selectFinishDay">
+								<option value="">00</option>
+							</select>
+							日
+						</td>
+					</tr>
+					<tr>
+						<td align="right">ステータス</td>
+						<td>：</td>
+						<td>
+							<select name="selectStatus">
+								<option value="FALSE">稼動中</option>
+								<option value="TRUE">終了済み</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<input type="button" value="プロジェクト情報更新" onclick="ClickUpdateProjectDataButton()"/>
+				<input type="button" value="　　　戻　　る　　　" onclick="SetDefaultSettingView()"/>
+			</td>
+		</tr>
+	</table>
+	</span>
+	<br>
+</body>
+</html>
