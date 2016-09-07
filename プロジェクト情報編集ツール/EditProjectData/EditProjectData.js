@@ -965,6 +965,8 @@ function UpdateProjectData(projectId, sendData) {
 // 戻り値　：無
 // =================================================================================================
 function ReadSampleConfig() {
+
+/* <<<<< OLD： XMLファイルの情報読み出しをjQueryで実施
 // オブジェクト作成
 	var ConfigFile = new ActiveXObject("Microsoft.XMLDOM");
 
@@ -992,6 +994,34 @@ function ReadSampleConfig() {
 			error_MSG	= error_MSG + "SampleConfig.xmlのTTFXWebServerにWebサイト名が入力されいません。";
 		}
 	}
+========== */
+	$.ajax({
+		async:'false',
+		url:'../SampleConfig.xml',
+		type:'get',
+		dataType:'xml',
+		timeout:1000,
+		success:function(){
+			ServerName		= $("ServerName").text();
+			TTFXWebServer	= $("TTFXWebServer").text();
+
+			if (ServerName == "") {
+				error_Flag	= 1;
+				error_MSG	= error_MSG + "SampleConfig.xmlのServerNameにホスト名が入力されいません。\n";
+			}
+
+			if (TTFXWebServer == "") {
+				error_Flag	= 1;
+				error_MSG	= error_MSG + "SampleConfig.xmlのTTFXWebServerにWebサイト名が入力されいません。";
+			}
+		}
+		error:function(){
+			error_Flag	= 1;
+			error_MSG	= error_MSG + "SampleConfig.xmlが正常に読み込めません。";
+		}
+	});
+// >>>>> NEW： ここまで
+
 }
 
 
